@@ -10,8 +10,11 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@mdi/font": "^5.9.55",
         "axios": "^0.21",
         "bootstrap": "^4.6.0",
+        "deepmerge": "^4.2.2",
+        "fibers": "^5.0.0",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
@@ -27,6 +30,8 @@
     },
     "dependencies": {
         "cross-env": "^7.0.3",
+        "vue-axios": "^3.2.5",
+        "vue-router": "^3.5.2",
         "vuetify": "^2.5.8"
     }
 }

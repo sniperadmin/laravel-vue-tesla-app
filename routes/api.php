@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\controllers\TodoController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('todos', [TodoController::class, 'index']);
-Route::post('todo/store', [TodoController::class, 'store']);
-Route::put('todo/{id}', [TodoController::class, 'update']);
-Route::delete('todo/{id}', [TodoController::class, 'destroy']);
+// Route::get('todos', [TodoController::class, 'index']);
+// Route::post('todo', [TodoController::class, 'store']);
+// Route::put('todo/{id}', [TodoController::class, 'update']);
+// Route::delete('todo/{id}', [TodoController::class, 'destroy']);
+
+Route::resource('todos', TodoController::class);

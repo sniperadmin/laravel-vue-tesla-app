@@ -26,7 +26,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        // will be creating one
     }
 
     /**
@@ -55,7 +55,12 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        //
+        $todo = Todo::findOrFail($id);
+
+        return response()->json([
+            'todo' => $todo,
+            'status' => 'success',
+        ]);
     }
 
     /**
@@ -82,7 +87,7 @@ class TodoController extends Controller
         $todo->todo = $request->todo;
 
         if ($request->has('completed')) {
-            $todo->completed = true;
+            $todo->completed = $request->completed;
         }
 
         $todo->save();
@@ -90,7 +95,7 @@ class TodoController extends Controller
         return response()->json([
             'todo' => $todo,
             'status' => 'success',
-        ])
+        ]);
     }
 
     /**

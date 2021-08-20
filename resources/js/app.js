@@ -27,8 +27,15 @@ window.Vue = require('vue').default;
 
 import Vuetify from 'vuetify/dist/vuetify';
 import "vuetify/dist/vuetify.min.css";
+import "@mdi/font/css/materialdesignicons.css"
+
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import router from './router'
 
 Vue.use(Vuetify);
+Vue.use(VueAxios, axios);
+// Vue.use(router)
 
 const vuetify = new Vuetify({
     theme: {
@@ -38,5 +45,6 @@ const vuetify = new Vuetify({
 
 new Vue({
     vuetify,
+    router,
     render: (h) => h(App)
 }).$mount('#todo');
