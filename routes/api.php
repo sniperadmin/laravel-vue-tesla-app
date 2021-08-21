@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TodoController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,13 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-// Route::get('todos', [TodoController::class, 'index']);
-// Route::post('todo', [TodoController::class, 'store']);
-// Route::put('todo/{id}', [TodoController::class, 'update']);
-// Route::delete('todo/{id}', [TodoController::class, 'destroy']);
+Route::group([
+    'middleware' => ['api', 'auth.jwt'],
+    'prefix' => 'auth',
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/profile', [AuthController::class, 'userProfile']);
+});
 
 Route::resource('todos', TodoController::class);
