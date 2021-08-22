@@ -10,4 +10,12 @@ class Todo extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    /**
+     * Return relationship with Todo
+     */
+    public function user()
+    {
+        return $this->belongsTo(Todo::class);
+    }
 }

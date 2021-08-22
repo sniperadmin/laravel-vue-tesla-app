@@ -23,15 +23,30 @@ class JwtMiddleWare extends BaseMiddleware
             $user = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
             if ($e instanceof Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-                return response()->json(['error' => 'invalid token'], 403);
+                return response()->json([
+                    'status' => 'error',
+                    'authorization' => 'invalid token',
+                ], 403);
             } else if ($e instanceof Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-                return response()->json(['error' => 'Token has Expired'], 401);
+                return response()->json([
+                    'status' => 'error',
+                    'authorization' => 'Token has Expired',
+                ], 401);
             } else if ($e instanceof Tymon\JWTAuth\Exceptions\TokenBlacklistedException) {
-                return response()->json(['error' => 'token is blacklisted!'], 401);
+                return response()->json([
+                    'status' => 'error',
+                    'authorization' => 'token is blacklisted!
+                    ', ], 401);
             } else if ($e instanceof Tymon\JWTAuth\Exceptions\JWTException) {
-                return response()->json(['error' => 'missing token to be parsed'], 401);
+                return response()->json([
+                    'status' => 'error',
+                    'authorization' => 'missing token to be parsed',
+                ], 401);
             } else {
-                return response()->json(['error' => 'auth token not found'], 404);
+                return response()->json([
+                    'status' => 'error',
+                    'authorization' => 'auth token not found',
+                ], 401);
             }
         }
         return $next($request);

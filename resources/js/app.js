@@ -33,9 +33,26 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import router from './router'
 
+// Vue-Auth
+import auth                  from '@websanova/vue-auth/dist/v2/vue-auth.esm.js';
+import driverAuthBearer      from '@websanova/vue-auth/dist/drivers/auth/bearer.esm.js';
+import driverHttpAxios       from '@websanova/vue-auth/dist/drivers/http/axios.1.x.esm.js';
+import driverRouterVueRouter from '@websanova/vue-auth/dist/drivers/router/vue-router.2.x.esm.js';
+
 Vue.use(Vuetify);
 Vue.use(VueAxios, axios);
-// Vue.use(router)
+Vue.use(auth, {
+    plugins: {
+        http: axios, // Axios
+        router: router
+    },
+    drivers: {
+        auth: driverAuthBearer, // this is for auth JWT
+        http: driverHttpAxios, // This is for axios
+        router: driverRouterVueRouter, // this is the included router in auth pack
+        oauth2: {}
+    }
+});
 
 const vuetify = new Vuetify({
     theme: {

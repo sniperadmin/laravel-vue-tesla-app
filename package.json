@@ -29,6 +29,7 @@
         "webpack": "^5.23.0"
     },
     "dependencies": {
+        "@websanova/vue-auth": "^4.1.4",
         "cross-env": "^7.0.3",
         "vue-axios": "^3.2.5",
         "vue-router": "^3.5.2",
