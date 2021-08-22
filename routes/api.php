@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::group([
-    'middleware' => ['api', 'auth.jwt'],
+    'middleware' => ['api'],
     'prefix' => 'auth',
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
@@ -31,3 +31,10 @@ Route::group([
 });
 
 Route::resource('todos', TodoController::class);
+
+Route::any('{any}', function () {
+    return response()->json([
+        'status' => 'error',
+        'message' => 'resource not found',
+    ], 404);
+})->where('any', '.*');
