@@ -2,11 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+// use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use \App\Models\User;
 
 class AuthTest extends TestCase
 {
+    use WithFaker;
+    // use DatabaseTransactions;
     /**
      * A basic feature test example.
      *
@@ -26,14 +30,13 @@ class AuthTest extends TestCase
     public function test_auth_register_success()
     {
         $response = $this->post('/api/auth/register', [
-            'name' => 'someone',
-            'email' => 'meow@me.com',
+            'name' => $this->faker->name(),
+            'email' => $this->faker->email(),
             'password' => 'meow12345',
             'password_confirmation' => 'meow12345',
         ]);
 
         $response->assertStatus(201);
-
     }
 
     public function test_auth_login_short_password()
@@ -76,5 +79,4 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200);
     }
-
 }

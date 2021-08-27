@@ -18,9 +18,9 @@ const routes = [
         component: Todo,
         props: true,
         meta: {
-            auth: {
-                redirect: '/login'
-            }
+            // auth: {
+            //     redirect: '/login'
+            // }
         },
         beforeRouteEnter(to, from, next) {
             console.info(
@@ -39,7 +39,7 @@ const routes = [
         path: '/login',
         name: 'login',
         component: Modal,
-        props: false,
+        props: true,
         meta: {
             showModal: true
         }

@@ -43,6 +43,9 @@
                     { icon: 'mdi-account', name: 'My Todos', to: '/todos/all' },
                 ]
             }
+        },
+        mounted() {
+            console.info(this.$auth);
         }
     }
 </script>

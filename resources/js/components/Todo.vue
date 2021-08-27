@@ -1,6 +1,8 @@
 <template>
     <v-container>
         <h3 class="mb-4">Todo App</h3>
+        <p>{{ $auth.user() }}</p>
+        <p class="mb-4">{{ $auth.check() }}</p>
         <v-layout row wrap>
             <v-flex text-center>
                 <add-todo :todos="todos" @toggle-all="toggleAll" @add-todo="addTodo" />
@@ -91,14 +93,14 @@
         },
         methods: {
             getTodos() {
-                this.axios.get('api/todos')
+                this.axios.get('/todos')
                 .then(res => {
                     console.log(res);
                     this.todos = res.data.todos;
                 }).catch()
             },
             toggleTodo(todo) {
-                this.axios.put('api/todos/' + todo.id, todo).then((res) => {
+                this.axios.put('/todos/' + todo.id, todo).then((res) => {
                     this.getTodos()
                 })
             },
@@ -107,7 +109,7 @@
                 if (text) {
                     // this.$store.dispatch('addTodo', text)
                     console.log("Added todo", text)
-                    this.axios.post('api/todos', { todo: text })
+                    this.axios.post('/todos', { todo: text })
                         .then(() => {
                             this.getTodos()
                         }).catch()
@@ -115,7 +117,7 @@
             },
             removeTodo(todo) {
                 console.log(todo.id);
-                this.axios.delete('api/todos/' + todo.id)
+                this.axios.delete('/todos/' + todo.id)
                     .then((res) => {
                         this.getTodos()
                     }).catch()
@@ -124,7 +126,7 @@
                 this.todos.filter(todo => todo.completed === 1)
                     .forEach(todo => {
                         // this.todos.splice(this.todos.indexOf(todo), 1)
-                        this.axios.delete('api/todos/' + todo.id)
+                        this.axios.delete('/todos/' + todo.id)
                             .then(() => {
                                 console.log('Deleted!')
                             })
@@ -137,7 +139,7 @@
                 this.todos.forEach(todo => {
                     todo.completed = value
 
-                    this.axios.put('api/todos/' + todo.id, todo)
+                    this.axios.put('/todos/' + todo.id, todo)
                         .then(() => console.log('Toggled all!'))
                         .catch((e) => console.log('Err toggling all!'))
                 })

@@ -22,6 +22,9 @@ class TodoFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => function () {
+                return \App\Models\User::factory(\Appp\Models\User::class)->create()->id;
+            },
             'todo' => $this->faker->sentence(),
             'completed' => $this->faker->boolean(),
         ];

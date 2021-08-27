@@ -39,11 +39,18 @@ import driverAuthBearer      from '@websanova/vue-auth/dist/drivers/auth/bearer.
 import driverHttpAxios       from '@websanova/vue-auth/dist/drivers/http/axios.1.x.esm.js';
 import driverRouterVueRouter from '@websanova/vue-auth/dist/drivers/router/vue-router.2.x.esm.js';
 
+const myaxios = axios.create({
+    baseURL: "http://localhost:8000/api",
+    headers: {
+        "Content-type": "application/json"
+    }
+});
+
 Vue.use(Vuetify);
-Vue.use(VueAxios, axios);
+Vue.use(VueAxios, myaxios);
 Vue.use(auth, {
     plugins: {
-        http: axios, // Axios
+        http: myaxios, // Axios
         router: router
     },
     drivers: {
@@ -51,7 +58,20 @@ Vue.use(auth, {
         http: driverHttpAxios, // This is for axios
         router: driverRouterVueRouter, // this is the included router in auth pack
         oauth2: {}
-    }
+    },
+    options: {
+        registerData: {},
+        loginData: {},
+        logoutData: {},
+        fetchData: { url: 'auth/profile', method: 'GET', enabled: false },
+        refreshData: {},
+        rolesKey: "type",
+        notFoundRedirect: { name: "home" }
+    },
+    // rememberkey: "auth_remember",
+    // tokenDefaultKey: "auth_token_default",
+    // tokenImpersonateKey: "auth_token_impersonate",
+    // stores: ["storage", "cookie"]
 });
 
 const vuetify = new Vuetify({

@@ -2,33 +2,65 @@
 
 namespace Tests\Feature;
 
+// use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use \App\Models\Todo;
+use \App\Models\User;
 
 class TodoTest extends TestCase
 {
+    use WithFaker;
+    // use DatabaseTransactions;
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_todos()
+
+    private $user;
+    private $token;
+    private $todo;
+
+    public function setUp(): void
     {
-        // $user = \App\Models\User::factory(App\User::class)->create();
-        // $user = $this->post('/api/auth/login', ['email' => 'nash@me.com', 'password' => '123456']);
-        // $user_id = $user["user"]["id"];
+        parent::setUp();
+        $password = 'meow1234';
+        $this->user = User::factory(User::class)->create([
+            'password' => bcrypt($password),
+        ]);
+        $login_response = $this->post('/api/auth/login', [
+            'email' => $this->user->email,
+            'password' => $password,
+        ]);
 
-        // // dd($user_id);
-        // $todo = \App\Models\Todo::factory(App\Todo::class)->create(['user_id' => $user_id]);
-
-        // $token = "Bearer $user->json()->access_token";
-
-        // $this->get('/api/todos', ['Authorization' => $token])->assertSee($todo->todo);
-
-        // $this->post('/api/todos', ['Authorization' => $token])->assetrStatus(201);
-
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-
+        $this->token = $login_response->json()['access_token'];
+        $this->todo = Todo::factory(Todo::class)->create(['user_id' => $this->user->id]);
     }
+
+    public function test_get_todos_success()
+    {
+        $this->get('/api/todos', ['Authorization' => "Bearer $this->token"])
+            ->assertSee($this->todo->todo)
+            ->assertStatus(200);
+    }
+
+    public function test_post_todos_success()
+    {
+        $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])
+            ->post('/api/todos', ['todo' => 'test todo'])->assertStatus(200);
+    }
+
+    public function test_put_todos_success()
+    {
+        $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])
+            ->post('/api/todos', ['todo' => 'test todo'])->assertStatus(200);
+    }
+
+    public function tearDown(): void
+    {
+        $this->artisan('migrate:refresh');
+        parent::tearDown();
+    }
+
 }

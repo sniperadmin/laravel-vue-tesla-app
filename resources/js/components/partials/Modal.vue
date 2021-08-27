@@ -57,19 +57,40 @@
             return {
                 dialog: false,
                 loginForm: {
-                    email: '',
-                    password: ''
+                    email: 'nash@me.com',
+                    password: '123456'
                 }
             }
         },
 
         methods: {
             submitLogin() {
-                this.axios.post('api/auth/login', this.loginForm)
-                    .then(res => {
-                        console.log(res);
+                this.$auth
+                    .login({
+                        body: this.loginForm,
+                        data: this.loginForm,
+                        redirect: null,
+                        staySignedIn: false,
+                        fetchUser: false,
+                    }).then(res => {
+                        console.log(this.$auth);
+                        // set token
+                        this.$auth.token('Bearer', res.access_token)
+                        this.$auth.currentToken = res.access_token
+                        // this.axios.defaults.headers.common['Authorization'] = res.access_token
+                        this.$auth.user(res)
+                        console.log(this.$auth);
+                        this.$auth.fetch()
                     })
-                    .catch()
+            }
+        },
+
+        computed: {
+            _user() {
+                return this.$auth.user()
+            },
+            _token() {
+                return this.$auth.token()
             }
         },
 
