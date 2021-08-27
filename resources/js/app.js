@@ -64,7 +64,7 @@ Vue.use(auth, {
         loginData: {},
         logoutData: {},
         fetchData: { url: 'auth/profile', method: 'GET', enabled: false },
-        refreshData: {},
+        refreshData: { enabled: false },
         rolesKey: "type",
         notFoundRedirect: { name: "home" }
     },

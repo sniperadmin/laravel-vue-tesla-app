@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use \App\Models\Todo;
@@ -11,7 +10,6 @@ use \App\Models\User;
 class TodoTest extends TestCase
 {
     use WithFaker;
-    // use DatabaseTransactions;
     /**
      * A basic feature test example.
      *

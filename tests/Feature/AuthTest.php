@@ -3,19 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-// use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
     use WithFaker;
-    // use DatabaseTransactions;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+
     public function test_auth_register_missing_params()
     {
         $response = $this->post('/api/auth/register', [
@@ -24,7 +18,6 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(400);
-
     }
 
     public function test_auth_register_success()
@@ -78,5 +71,11 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(200);
+    }
+
+    public function tearDown(): void
+    {
+        $this->artisan('migrate:refresh');
+        parent::tearDown();
     }
 }

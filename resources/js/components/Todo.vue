@@ -1,8 +1,6 @@
 <template>
     <v-container>
         <h3 class="mb-4">Todo App</h3>
-        <p>{{ $auth.user() }}</p>
-        <p class="mb-4">{{ $auth.check() }}</p>
         <v-layout row wrap>
             <v-flex text-center>
                 <add-todo :todos="todos" @toggle-all="toggleAll" @add-todo="addTodo" />

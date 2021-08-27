@@ -18,9 +18,7 @@ const routes = [
         component: Todo,
         props: true,
         meta: {
-            // auth: {
-            //     redirect: '/login'
-            // }
+            auth: true
         },
         beforeRouteEnter(to, from, next) {
             console.info(
@@ -41,7 +39,8 @@ const routes = [
         component: Modal,
         props: true,
         meta: {
-            showModal: true
+            auth: false,
+            showModal: true,
         }
     },
 ]
@@ -49,7 +48,7 @@ const routes = [
 const router = new Router({
     scrollBehavior: () => ({ y: 0 }),
     routes,
-    mode: 'history',
+    mode: 'hash',
 })
 
 export default router

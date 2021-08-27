@@ -9,7 +9,7 @@
         <v-navigation-drawer v-model="drawer" app absolute temporary>
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="light-blue--text text--accent-4">
-                    <v-list-item v-for="(item, i) in links" :key="i" :to="item.to">
+                    <v-list-item v-for="(item, i) in filteredLinks" :key="i" :to="item.to">
                         <v-list-item-icon>
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-list-item-icon>
@@ -36,16 +36,21 @@
                 drawer: false,
                 group: null,
                 links: [
-                    { icon: 'mdi-home', name: 'Home', to: '/' },
-                    { icon: 'mdi-account', name: 'Account', to: '/profile' },
-                    { icon: 'mdi-account', name: 'Login', to: '/login' },
-                    { icon: 'mdi-account', name: 'Signup', to: '/signup' },
-                    { icon: 'mdi-account', name: 'My Todos', to: '/todos/all' },
+                    { icon: 'mdi-home', name: 'Home', to: '/', protected: false },
+                    { icon: 'mdi-account', name: 'Login', to: '/login', protected: false, hide: true },
+                    { icon: 'mdi-account', name: 'Signup', to: '/signup', protected: false, hide: true },
+                    { icon: 'mdi-account', name: 'Account', to: '/profile', protected: true },
+                    { icon: 'mdi-account', name: 'My Todos', to: '/todos/all', protected: true },
                 ]
             }
         },
-        mounted() {
-            console.info(this.$auth);
+        computed: {
+            filteredLinks() {
+                const { $auth, links } = this
+                return links.filter(
+                    l => $auth.check() || !l.protected
+                )
+            }
         }
     }
 </script>

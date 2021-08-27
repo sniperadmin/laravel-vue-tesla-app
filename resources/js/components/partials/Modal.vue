@@ -71,16 +71,9 @@
                         data: this.loginForm,
                         redirect: null,
                         staySignedIn: false,
-                        fetchUser: false,
+                        fetchUser: true,
                     }).then(res => {
-                        console.log(this.$auth);
-                        // set token
-                        this.$auth.token('Bearer', res.access_token)
-                        this.$auth.currentToken = res.access_token
-                        // this.axios.defaults.headers.common['Authorization'] = res.access_token
-                        this.$auth.user(res)
-                        console.log(this.$auth);
-                        this.$auth.fetch()
+                        console.log('Successfully logged in: ', this.$auth);
                     })
             }
         },
